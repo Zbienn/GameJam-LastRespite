@@ -17,6 +17,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject _groundTestLineEnd;
 
+
+    private int _jumpCount = 0;
+    [SerializeField]
+    private int _maxJumps = 2;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -29,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) _moveInput = -1f;
         else if (Input.GetKey(KeyCode.D)) _moveInput = 1f;
 
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)  _jumpCommand = true;
+        if (Input.GetKeyDown(KeyCode.Space) && _jumpCount < _maxJumps)  _jumpCommand = true;
     }
 
     private void FixedUpdate()
@@ -40,21 +45,24 @@ public class PlayerMovement : MonoBehaviour
             _groundTestLineStart.transform.position
         );
 
-      
+        if (_isGrounded)
+        {
+            _jumpCount = 0;
+        }
+
         _rb.linearVelocity = new Vector2(_moveInput * _runSpeed, _rb.linearVelocity.y);
 
-       
         if (_jumpCommand)
         {
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpPower);
             _jumpCommand = false;
+            _jumpCount++;
         }
 
-      
         if (_moveInput != 0)
         {
             Vector3 scale = transform.localScale;
-            scale.x = Mathf.Sign(_moveInput) * 5f; 
+            scale.x = Mathf.Sign(_moveInput) * Mathf.Abs(scale.x); 
             transform.localScale = scale;
         }
     }
