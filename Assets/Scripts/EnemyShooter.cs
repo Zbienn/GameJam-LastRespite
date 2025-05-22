@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
 {
+    private enum EnemyType { Goblin, Bat }
+
+    [Header("Tipo de Inimigo")]
+    [SerializeField] private EnemyType enemyType;
+
+    [Header("Disparo")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform firePoint;
     [SerializeField] private float shootCooldown = 2f;
@@ -12,33 +18,45 @@ public class EnemyShooter : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (enemyType == EnemyType.Goblin)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
         enemyAnimator = GetComponent<EnemyAnimator>();
-        cooldownTimer = 0f; // pronto a atacar logo
+        cooldownTimer = 0f;
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (enemyType == EnemyType.Goblin && player == null) return;
 
         cooldownTimer -= Time.deltaTime;
 
         if (cooldownTimer <= 0f)
         {
-            enemyAnimator.PlayAttack(); // sincronizado!
-            cooldownTimer = Mathf.Infinity; // espera pelo evento
+                enemyAnimator.PlayAttack();
+                cooldownTimer = Mathf.Infinity;
         }
     }
 
-    // Este método deve ser chamado no EVENTO da animação
+    // Chamado no evento da animação
     public void ShootProjectile()
     {
-        if (player == null) return;
+        Vector2 direction;
 
-        Vector2 direction = (player.position - firePoint.position).normalized;
+        if (enemyType == EnemyType.Goblin && player != null)
+        {
+            direction = (player.position - firePoint.position).normalized;
+        }
+        else if (enemyType == EnemyType.Bat)
+        {
+            direction = Vector2.down;
+        }
+        else return;
+
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetDirection(direction);
 
-        cooldownTimer = shootCooldown; // só reinicia aqui = sincronização perfeita
+        cooldownTimer = shootCooldown;
     }
 }
