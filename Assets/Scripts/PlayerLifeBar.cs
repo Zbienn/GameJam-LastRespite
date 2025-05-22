@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class PlayerLifeBar : MonoBehaviour
 {
@@ -19,6 +20,12 @@ public class PlayerLifeBar : MonoBehaviour
     [Header("Death Section")]
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private Transform respawnPoint;
+
+    [Header("Campfire Section")]
+    [SerializeField]
+    private GameObject _campfire;
+    [SerializeField]
+    private TextMeshProUGUI _campfireText;
 
     void Start()
     {
@@ -92,7 +99,18 @@ public class PlayerLifeBar : MonoBehaviour
 
         currentLife = maxLife;
         UpdateHealthUI();
-        transform.position = respawnPoint.position;
+        if (_campfire.activeSelf)
+        {
+            Vector3 offset = new Vector3(0f, 0.5f, 0f);
+            Vector3 result = _campfire.transform.position + offset;
+            transform.position = result;
+        }
+        else
+        {
+            _campfire.SetActive(false);
+            _campfireText.text = "1";
+            transform.position = respawnPoint.position;
+        }
 
         GetComponent<PlayerMovement>().enabled = true;
     }

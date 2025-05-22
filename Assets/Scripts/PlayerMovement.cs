@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject _groundTestLineEnd;
 
+    [Header("Campfire Section")]
+    [SerializeField]
+    private GameObject _campfirePoint;
+    [SerializeField]
+    private GameObject _campfire;
+    [SerializeField]
+    private TextMeshProUGUI _campfireText;
+
 
     [Header("Jump Section")]
     [SerializeField] private float _jumpPower = 5.0f;
@@ -36,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _moveInput = 0f;
 
-       
 
         if (Input.GetKey(KeyCode.A)) _moveInput = -1f;
         else if (Input.GetKey(KeyCode.D)) _moveInput = 1f;
@@ -57,9 +65,16 @@ public class PlayerMovement : MonoBehaviour
             _groundTestLineStart.transform.position
         );
 
-        if (_isGrounded)
+        if (_isGrounded) _jumpCount = 0;
+
+        if (Input.GetKey(KeyCode.C) && _isGrounded)
         {
-            _jumpCount = 0;
+            if (!_campfire.activeSelf && _campfireText.text != "0")
+            {
+                _campfire.transform.position = _campfirePoint.transform.position;
+                _campfire.SetActive(true);
+                _campfireText.text = "0";
+            }
         }
 
         if (_animator != null)
@@ -82,5 +97,10 @@ public class PlayerMovement : MonoBehaviour
             scale.x = Mathf.Sign(_moveInput) * Mathf.Abs(scale.x); 
             transform.localScale = scale;
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKey(KeyCode.R)) _campfire.SetActive(false);
     }
 }
