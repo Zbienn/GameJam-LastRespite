@@ -5,11 +5,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private float _moveInput;
     private bool _jumpCommand;
+    private Animator _animator;
 
-    [SerializeField]
-    private float _jumpPower = 5.0f;
+    [Header("Run Section")]
     [SerializeField]
     private float _runSpeed = 5.0f;
+
+    [Header("Ground Section")]
     [SerializeField]
     private bool _isGrounded;
     [SerializeField]
@@ -18,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private GameObject _groundTestLineEnd;
 
 
+    [Header("Jump Section")]
+    [SerializeField] private float _jumpPower = 5.0f;
     private int _jumpCount = 0;
     [SerializeField]
     private int _maxJumps = 2;
@@ -25,14 +29,22 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
         _moveInput = 0f;
 
+       
+
         if (Input.GetKey(KeyCode.A)) _moveInput = -1f;
         else if (Input.GetKey(KeyCode.D)) _moveInput = 1f;
+
+        if (_animator != null)
+        {
+            _animator.SetBool("isRunning", _moveInput != 0f);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && _jumpCount < _maxJumps)  _jumpCommand = true;
     }
@@ -48,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded)
         {
             _jumpCount = 0;
+        }
+
+        if (_animator != null)
+        {
+            _animator.SetBool("isJumping", !_isGrounded);
         }
 
         _rb.linearVelocity = new Vector2(_moveInput * _runSpeed, _rb.linearVelocity.y);
