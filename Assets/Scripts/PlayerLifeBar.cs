@@ -33,6 +33,10 @@ public class PlayerLifeBar : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _coinsText;
 
+    [Header("Audio Section")]
+    [SerializeField] private AudioClip damageSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -45,11 +49,18 @@ public class PlayerLifeBar : MonoBehaviour
         if (deathPanel != null)
             deathPanel.SetActive(false);
 
+        audioSource = GetComponent<AudioSource>();
+
         UpdateHealthUI();
     }
 
     public void TakeDamage(float damage)
     {
+        if (audioSource != null && damageSound != null)
+        {
+            audioSource.PlayOneShot(damageSound);
+        }
+
         if (animator != null)
         {
             animator.SetBool("isHurt", true);

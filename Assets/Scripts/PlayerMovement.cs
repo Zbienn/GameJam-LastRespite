@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -35,10 +36,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private int _maxJumps = 2;
 
+    [Header("Audio Section")]
+    [SerializeField] private AudioClip _jumpSound;
+    [SerializeField] private AudioClip _campSpawnSound;
+    [SerializeField] private AudioClip _campBreakSound;
+    private AudioSource _audioSource;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -71,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!_campfire.activeSelf && _campfireText.text != "0")
             {
+                if (_campSpawnSound != null && _audioSource != null) _audioSource.PlayOneShot(_campSpawnSound);
                 _campfire.transform.position = _campfirePoint.transform.position;
                 _campfire.SetActive(true);
                 _campfireText.text = "0";
@@ -86,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_jumpCommand)
         {
+            if (_jumpSound != null && _audioSource != null)  _audioSource.PlayOneShot(_jumpSound);
             _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpPower);
             _jumpCommand = false;
             _jumpCount++;
@@ -101,6 +111,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKey(KeyCode.R)) _campfire.SetActive(false);
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (_campBreakSound != null && _audioSource != null) _audioSource.PlayOneShot(_campBreakSound);
+            _campfire.SetActive(false);
+        }
     }
 }
