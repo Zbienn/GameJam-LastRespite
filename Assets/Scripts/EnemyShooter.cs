@@ -14,7 +14,7 @@ public class EnemyShooter : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         enemyAnimator = GetComponent<EnemyAnimator>();
-        cooldownTimer = 0f; // pronto a atacar logo
+        cooldownTimer = 0f;
     }
 
     void Update()
@@ -25,12 +25,11 @@ public class EnemyShooter : MonoBehaviour
 
         if (cooldownTimer <= 0f)
         {
-            enemyAnimator.PlayAttack(); // sincronizado!
-            cooldownTimer = Mathf.Infinity; // espera pelo evento
+            enemyAnimator.PlayAttack();
+            cooldownTimer = Mathf.Infinity;
         }
     }
 
-    // Este método deve ser chamado no EVENTO da animação
     public void ShootProjectile()
     {
         if (player == null) return;
@@ -39,6 +38,6 @@ public class EnemyShooter : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetDirection(direction);
 
-        cooldownTimer = shootCooldown; // só reinicia aqui = sincronização perfeita
+        cooldownTimer = shootCooldown;
     }
 }

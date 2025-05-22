@@ -15,17 +15,14 @@ public class Projectile : MonoBehaviour
         if (direction == Vector2.zero) return;
         transform.position += (Vector3)(direction * speed * Time.deltaTime);
 
-        // (Opcional) destruir após 5s
         Destroy(gameObject, 5f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Enemy"))
         {
-            //damage
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

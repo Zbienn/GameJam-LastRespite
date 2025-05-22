@@ -90,10 +90,11 @@ public class PlayerLifeBar : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             TakeDamage(contactDamage);
+            Destroy(collision.gameObject);
         }
     }
 
-    //MUDAR
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Projectile"))
