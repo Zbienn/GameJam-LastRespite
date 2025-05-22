@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerLifeBar : MonoBehaviour
 {
+    private Animator animator;
+
     [Header("UI")]
     [SerializeField] private Slider lifeSlider;
 
@@ -13,35 +16,49 @@ public class PlayerLifeBar : MonoBehaviour
     [Header("Dano por contacto")]
     [SerializeField] private float contactDamage = 10f;
 
+    [Header("Death Section")]
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private Transform respawnPoint;
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         currentLife = maxLife;
         if (lifeSlider != null)
         {
             lifeSlider.maxValue = maxLife;
             lifeSlider.value = currentLife;
         }
+        if (deathPanel != null)
+            deathPanel.SetActive(false);
+
+        UpdateHealthUI();
     }
 
     public void TakeDamage(float damage)
     {
+        if (animator != null)
+        {
+            animator.SetBool("isHurt", true);
+        }
+
         currentLife -= damage;
         currentLife = Mathf.Clamp(currentLife, 0f, maxLife);
+        UpdateHealthUI();
 
+        if (currentLife <= 0)
+        {
+            StartCoroutine(ResetHurtAnimation());
+            StartCoroutine(HandleDeath());
+        } else StartCoroutine(ResetHurtAnimation());
+    }
+
+    void UpdateHealthUI()
+    {
         if (lifeSlider != null)
         {
             lifeSlider.value = currentLife;
         }
-
-        if (currentLife <= 0f)
-        {
-            Die();
-        }
-    }
-
-    void Die()
-    {
-        Debug.Log("O jogador morreu!");
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -59,5 +76,30 @@ public class PlayerLifeBar : MonoBehaviour
         {
             TakeDamage(contactDamage);
         }
+    }
+
+    private IEnumerator HandleDeath()
+    {
+
+        if (deathPanel != null)
+            deathPanel.SetActive(true);
+
+        GetComponent<PlayerMovement>().enabled = false;
+
+        yield return new WaitForSeconds(3f);
+
+        if (deathPanel != null) deathPanel.SetActive(false);
+
+        currentLife = maxLife;
+        UpdateHealthUI();
+        transform.position = respawnPoint.position;
+
+        GetComponent<PlayerMovement>().enabled = true;
+    }
+
+    private IEnumerator ResetHurtAnimation()
+    {
+        yield return new WaitForSeconds(0.3f);
+        if (animator != null) animator.SetBool("isHurt", false);
     }
 }
