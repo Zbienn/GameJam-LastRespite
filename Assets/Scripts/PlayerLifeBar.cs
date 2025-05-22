@@ -97,9 +97,10 @@ public class PlayerLifeBar : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Projectile"))
+        switch (other.tag)
         {
-            TakeDamage(contactDamage);
+            case "Projectile": TakeDamage(contactDamage); break;
+            case "Respawn": TakeDamage(maxLife); break;
         }
     }
 
@@ -111,7 +112,9 @@ public class PlayerLifeBar : MonoBehaviour
 
         GetComponent<PlayerMovement>().enabled = false;
 
-        yield return new WaitForSeconds(3f);
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(3f);
+        Time.timeScale = 1f;
 
         if (deathPanel != null) deathPanel.SetActive(false);
 
@@ -135,7 +138,7 @@ public class PlayerLifeBar : MonoBehaviour
 
     private IEnumerator ResetHurtAnimation()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
         if (animator != null) animator.SetBool("isHurt", false);
     }
 }
