@@ -27,6 +27,12 @@ public class PlayerLifeBar : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _campfireText;
 
+    [Header("Coin Section")]
+    [SerializeField]
+    private GameObject _coins;
+    [SerializeField]
+    private TextMeshProUGUI _coinsText;
+
     void Start()
     {
         animator = GetComponent<Animator>();
