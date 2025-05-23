@@ -1012,19 +1012,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'C to setup a respite camp
+  m_text: 'C to setup a respite camp & R on the camp to destroy it
 
-    Esc to Pause the game
+    Esc to Pause
+    the game
 
-    A/D to move
-    left and right
+    A/D to move left and right
 
-    Space to jump
+    Space to jump & double jump
 
 
-    You only have 1 respite camp. You can
-    setup camp anywhere anytime. If you have one setted, you will respawn at camp.
-    Use it wisely.
+    You
+    only have 1 respite camp. You can setup camp anywhere anytime. If you have one
+    setted, you will respawn at camp. Use it wisely.
 
 '
   m_isRightToLeft: 0
@@ -1162,7 +1162,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SAIR
+  m_text: EXIT GAME
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1665,11 +1665,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1561398338202732369, guid: c8658ba2aaddca04488581b61334f3e6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1561398338202732369, guid: c8658ba2aaddca04488581b61334f3e6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -130.39711
+      value: -137
       objectReference: {fileID: 0}
     - target: {fileID: 1561398338202732369, guid: c8658ba2aaddca04488581b61334f3e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1760,8 +1760,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.8331, y: -142}
-  m_SizeDelta: {x: 150, y: 40}
+  m_AnchoredPosition: {x: 0, y: -140}
+  m_SizeDelta: {x: 225.3234, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045190875
 MonoBehaviour:
@@ -2005,6 +2005,10 @@ PrefabInstance:
     - target: {fileID: 2544389382761078516, guid: c8658ba2aaddca04488581b61334f3e6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4351852196969329941, guid: c8658ba2aaddca04488581b61334f3e6, type: 3}
+      propertyPath: m_text
+      value: PLAY
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

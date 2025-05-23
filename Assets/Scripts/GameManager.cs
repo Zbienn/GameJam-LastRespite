@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject pauseMenuPanel;
+    [SerializeField] private GameObject victoryPanel;
     private bool isPaused = false;
 
     void Update()
@@ -15,6 +16,15 @@ public class GameManager : MonoBehaviour
                 Resume();
             else
                 Pause();
+        }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            WinGame();
         }
     }
 
@@ -42,5 +52,17 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Saiu do jogo");
+    }
+
+    public void WinGame()
+    {
+        Time.timeScale = 0f;
+        victoryPanel.SetActive(true);
+    }
+
+    public void ReplayLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

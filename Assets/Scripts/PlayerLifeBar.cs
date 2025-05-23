@@ -92,6 +92,10 @@ public class PlayerLifeBar : MonoBehaviour
             TakeDamage(contactDamage);
             Destroy(collision.gameObject);
         }
+        if (collision.collider.CompareTag("Skeleton"))
+        {
+            TakeDamage(contactDamage);
+        }
     }
 
     
