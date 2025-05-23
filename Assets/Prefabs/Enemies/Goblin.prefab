@@ -101,7 +101,7 @@ Animator:
   m_GameObject: {fileID: 4994643175251745085}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7e123ffdc18a7894995ff07a6f5562b6, type: 2}
+  m_Controller: {fileID: 9100000, guid: b5f09e82c82cc8145a60deaa9ab4aaeb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33a09a9777923947ba57d915ea33c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   projectilePrefab: {fileID: 3532692129360615912, guid: be8270e8c427d7d4a97a31bd27b94575, type: 3}
   firePoint: {fileID: 6662402878817293187}
   shootCooldown: 1
