@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1591817139745549054}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.143, y: -0.461, z: 0}
+  m_LocalPosition: {x: 0.143, y: -0.274, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -211,8 +211,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.037277613, y: 0}
-  m_Size: {x: 0.39544478, y: 0.53}
+  m_Offset: {x: -0.037277613, y: 0.00438505}
+  m_Size: {x: 0.39544478, y: 0.52122986}
   m_Direction: 0
 --- !u!50 &2964929631548208257
 Rigidbody2D:
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   groundCheck: {fileID: 4907119418071666733}
-  groundCheckDistance: 1
+  groundCheckDistance: 0.1
   wallCheck: {fileID: 7891521610270363797}
   wallCheckDistance: 0.1
   groundLayer:
